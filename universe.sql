@@ -86,6 +86,8 @@ ALTER SEQUENCE public.galaxy_galaxy_id_seq OWNED BY public.galaxy.galaxy_id;
 
 CREATE TABLE public.galaxy_star (
     galaxy_star_id integer NOT NULL,
+    name character varying(50),
+    new_old boolean NOT NULL,
     galaxy_id integer NOT NULL,
     star_id integer NOT NULL
 );
@@ -280,9 +282,9 @@ INSERT INTO public.galaxy VALUES (6, 'Hoags', 'diameter = 100000 ly, Distance = 
 -- Data for Name: galaxy_star; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.galaxy_star VALUES (1, 1, 1);
-INSERT INTO public.galaxy_star VALUES (2, 2, 2);
-INSERT INTO public.galaxy_star VALUES (3, 3, 3);
+INSERT INTO public.galaxy_star VALUES (1, 'temp1', true, 1, 1);
+INSERT INTO public.galaxy_star VALUES (2, 'temp2', false, 2, 2);
+INSERT INTO public.galaxy_star VALUES (3, 'temp3', true, 3, 3);
 
 
 --
@@ -393,11 +395,19 @@ ALTER TABLE ONLY public.galaxy
 
 
 --
+-- Name: galaxy_star galaxy_star_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.galaxy_star
+    ADD CONSTRAINT galaxy_star_name_key UNIQUE (name);
+
+
+--
 -- Name: galaxy_star galaxy_star_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.galaxy_star
-    ADD CONSTRAINT galaxy_star_pkey PRIMARY KEY (galaxy_id, star_id);
+    ADD CONSTRAINT galaxy_star_pkey PRIMARY KEY (galaxy_star_id);
 
 
 --
